@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username');
             $table->string('password');
-            $table->enum('role', ['1', '2', '3'])->default('3');
+            $table->enum('role', ['1', '2', '3']);
             $table->string('email');
             $table->string('activation_code');
             $table->enum('active', ['0', '1'])->default('0');

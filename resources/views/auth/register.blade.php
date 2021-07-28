@@ -70,6 +70,22 @@
                         </div>
                     @enderror
 
+                    <div class="form-group">
+                        <select class="form-control @error('role')
+                                                            is-invalid
+                            @enderror" id="role" name="role">
+                            <option selected value="">--Pilih Level--</option>
+                            <option value="2">Guru</option>
+                            <option value="3">Siswa</option>
+                        </select>
+                    </div>
+
+                    @error('role')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password')
                                                 is-invalid

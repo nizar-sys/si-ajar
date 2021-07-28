@@ -94,5 +94,3 @@ Route::middleware(['auth'])->group(function () {
 
 // verifikasi akun
 Route::get('/activation/{activationCode}', [RegisterController::class, 'verifikasi']);
-
-Route::get('/update', [AjarController::class, 'updateStatus']);

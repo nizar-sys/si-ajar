@@ -29,6 +29,6 @@ class MyTestMail extends Mailable
     public function build()
     {
         $details = $this->details;
-        return $this->subject('Mail from Si Ajar')->view('emails.myTestMail', compact('details'));
+        return $this->subject('Aktifasi akun Si-Ajar')->view('emails.myTestMail', compact('details'));
     }
 }

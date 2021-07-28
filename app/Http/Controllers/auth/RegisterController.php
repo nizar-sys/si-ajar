@@ -44,14 +44,16 @@ class RegisterController extends Controller
             'username' => 'required|unique:users|min:5',
             'email' => 'required|unique:users|email',
             'password' => 'required|min:6',
-            'password2' => 'required|same:password'
+            'password2' => 'required|same:password',
+            'role'=>'required',
         ];
 
         $message = [
-            'username.required' => 'username wajib diisi',
-            'email.required' => 'email wajib diisi',
-            'password.required' => 'password wajib diisi',
-            'password2.required' => 'konfirmasi password wajib diisi',
+            'username.required' => 'username harus diisi',
+            'email.required' => 'email harus diisi',
+            'password.required' => 'password harus diisi',
+            'password2.required' => 'konfirmasi password harus diisi',
+            'role.required' => 'Level harus diisi',
 
             'username.unique' => 'Username sudah terdaftar',
             'email.unique' => 'Email sudah terdaftar',
@@ -62,19 +64,20 @@ class RegisterController extends Controller
         ];
 
         $validated = $this->validate($request, $rules, $message);
-
+        
         $createUser = User::create([
             'username' => $validated['username'],
             'password' => Hash::make($validated['password']),
+            'role'=>$validated['role'],
             'email' => $validated['email'],
-            'activation_code' => $validated['username'] . Str::random(20),
+            'activation_code' => $validated['username'] . Str::random(40),
         ]);
 
         if ($createUser) {
             $details = [
                 'title' => 'Aktivasi akun Si-Ajar',
                 'body' => 'Klik button untuk aktivasi akun',
-                'urlActivation' => 'http://si-ajar.herokuapp.com/' . 'activation/' . $createUser['activation_code'],
+                'urlActivation' => env('APP_URL') . 'activation/' . $createUser['activation_code'],
             ];
             Mail::to($validated['email'])->send(new MyTestMail($details));
             return redirect('/')->with('message', 'Berhasil registrasi, silahkan aktivasi akun anda tlb dulu !');
