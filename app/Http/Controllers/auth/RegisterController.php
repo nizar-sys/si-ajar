@@ -77,7 +77,7 @@ class RegisterController extends Controller
             $details = [
                 'title' => 'Aktivasi akun Si-Ajar',
                 'body' => 'Klik button untuk aktivasi akun',
-                'urlActivation' => env('APP_URL') . 'activation/' . $createUser['activation_code'],
+                'urlActivation' => 'http://si-ajar.herokuapp.com/' . 'activation/' . $createUser['activation_code'],
             ];
             Mail::to($validated['email'])->send(new MyTestMail($details));
             return redirect('/')->with('message', 'Berhasil registrasi, silahkan aktivasi akun anda tlb dulu !');
