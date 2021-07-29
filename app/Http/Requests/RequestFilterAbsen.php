@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RequestStoreRombel extends FormRequest
+class RequestFilterAbsen extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class RequestStoreRombel extends FormRequest
     public function rules()
     {
         return [
-            'rombel'=>'required|unique:tb_kelas',
-            'wali_kelas'=>'nullable',
-            'ketua_kelas'=>'nullable|unique:tb_kelas'
+            'jadwal_id'=>'required',
+            'tanggal'=>'required',
         ];
     }
 
@@ -34,8 +33,6 @@ class RequestStoreRombel extends FormRequest
     {
         return [
             '*.required'=>':attribute harus diisi',
-            'ketua_kelas.unique'=>'Kelas yang dipilih sudah ada ketua kelas',
-            'rombel.unique'=>'Kelas sudah ada',
         ];
     }
 }

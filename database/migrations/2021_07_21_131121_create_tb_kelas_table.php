@@ -16,9 +16,9 @@ class CreateTbKelasTable extends Migration
         Schema::create('tb_kelas', function (Blueprint $table) {
             $table->id();
             $table->string('rombel');
-            $table->unsignedBigInteger('wali_kelas')->default(null);
+            $table->unsignedBigInteger('wali_kelas')->nullable();
             $table->foreign('wali_kelas')->references('id')->on('users')->onUpdate('cascade');
-            $table->unsignedBigInteger('ketua_kelas')->default(null);
+            $table->unsignedBigInteger('ketua_kelas')->nullable();
             $table->foreign('ketua_kelas')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();
         });

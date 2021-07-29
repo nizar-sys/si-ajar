@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class MapelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('adminGuru');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -39,6 +39,9 @@ Route::resource('login', LoginController::class);
 // jadwal ajar
 Route::resource('jadwal-ajar', AjarController::class);
 
+// crud mapel
+Route::resource('data-mapel', MapelController::class);
+
 // dashboard admin
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('admin', AdminController::class);
@@ -54,8 +57,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     // crud kelas
     Route::resource('data-kelas', KelasController::class);
 
-    // crud mapel
-    Route::resource('data-mapel', MapelController::class);
+    
 });
 
 // dashboard guru
@@ -81,9 +83,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-// logout
 Route::middleware(['auth'])->group(function () {
+
+    Route::post('/data-absensi', [GuruController::class, 'filterAbsensi'])->name('filterAbsensi');
 
     Route::resource('profile', ProfileController::class);
     Route::put('/changeprofile/{id}', [ProfileController::class, 'changeFoto'])->name('changeFoto');

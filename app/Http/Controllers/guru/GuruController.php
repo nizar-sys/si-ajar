@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\guru;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestFilterAbsen;
 use App\Models\Absensi;
 use App\Models\Ajar;
 use App\Models\Kelas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
 {
@@ -16,6 +18,7 @@ class GuruController extends Controller
     {
         $this->middleware('isActive');   
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,10 +34,23 @@ class GuruController extends Controller
         return view('guru.data-guru.index');
     }
 
-    public function dataAbsen($id = null)
+    public function dataAbsen($absensi = null)
     {
-        $jadwal = Ajar::all();
-        return view('guru.data-absen.index', compact('jadwal'));
+        $data = Ajar::all()->sortByDesc('id');
+        return view('guru.data-absen.index', compact('data', 'absensi'));
+    }
+
+    public function filterAbsensi(RequestFilterAbsen $request)
+    {
+        $validated = $request->validated();
+
+        $absensi = Absensi::all()
+                                ->where('jadwal_id', $validated['jadwal_id'])
+                                ->where('created_at', '>=', $validated['tanggal']);
+
+        // dd($absensi);
+        $data = Ajar::all()->sortByDesc('id');
+        return view('guru.data-absen.index', compact('absensi', 'data'));
     }
 
     /**

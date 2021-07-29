@@ -11,6 +11,11 @@
                             <h3 class="card-title">Daftar rombel</h3>
                         </div>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                </div>
+                            </div>
                             <table class="table table-bordered text-center" id="table">
                                 @if (Auth::user()->role === '1')
                                     <p class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_rombel"><i
@@ -30,7 +35,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->rombel }}</td>
-                                            <td>{{ $data->walikelas->nama }}</td>
+                                            <td>{{ $data->walikelas != null ? $data->walikelas->nama : 'Belum ada wali kelas' }}</td>
                                             <td>{{ $data->ketuakelas != null ? $data->ketuakelas->nama : 'Belum ada ketua kelas' }}
                                             </td>
                                             <td>

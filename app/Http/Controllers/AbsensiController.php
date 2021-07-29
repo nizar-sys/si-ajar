@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestStoreAbsen;
 use App\Models\Absensi;
+use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AbsensiController extends Controller
 {
@@ -16,7 +19,15 @@ class AbsensiController extends Controller
      */
     public function index()
     {
-        //
+        $siswa = Student::all()
+                                ->where('user_id', Auth::user()->id)->first();
+        if($siswa != null){
+            $absensi = Absensi::all()
+                                    ->where('siswa_id', $siswa->id);
+            return view('siswa.absenku.index', compact('absensi'));
+        }else{
+            return redirect()->route('profile.create')->with('error', 'Kamu harus konfirmasi data lebih dulu!');
+        }
     }
 
     /**
@@ -44,17 +55,23 @@ class AbsensiController extends Controller
         $carbon = new Carbon;
         $jam = $carbon->format('H:i');
 
-        $tambahAbsen = Absensi::create([
-            'jadwal_id'=>$validated['jadwal_id'],
-            'siswa_id'=>$request->siswa_id,
-            'jam_absen'=>$jam,
-            'keterangan'=>$validated['keterangan'],
-        ]);
+        $cekAbsen = DB::table('tb_absensi')
+                                            ->where('jadwal_id', $validated['jadwal_id'])
+                                            ->where('siswa_id', $request->siswa_id)
+                                            ->get();
 
-        if($tambahAbsen){
+        if($cekAbsen->isEmpty()){
+
+            Absensi::create([
+                'jadwal_id'=>$validated['jadwal_id'],
+                'siswa_id'=>$request->siswa_id,
+                'jam_absen'=>$jam,
+                'keterangan'=>$validated['keterangan'],
+            ]);
+
             return redirect('/jadwal')->with('message', 'Berhasil absensi');
         }else{
-            return redirect('/jadwal')->with('error', 'Gagal absensi');
+            return redirect('/jadwal')->with('error', 'Kamu sudah absensi');
         }
     }
 

@@ -17,7 +17,7 @@ class AdminGuru
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role != '1' && Auth::user()->role != '2') {
+        if (Auth::user()->role === '3') {
             return redirect()->back()->with('Maaf kamu tidak punya akses ke laman yang dituju');
         }
         return $next($request);

@@ -191,17 +191,25 @@
                                                 <p>Jadwal Rombel</p>
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a href="/absensi" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Histori Absensi</p>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             @endif
 
-                            <li class="nav-item">
-                                <a href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}"
-                                    class="nav-link">
-                                    <i class="fas fa-user nav-icon"></i>
-                                    <p>My profile</p>
-                                </a>
-                            </li>
+                            @if (Auth::user()->role != '1')
+                                <li class="nav-item">
+                                    <a href="{{ route('profile.show', ['profile' => Auth::user()->id]) }}"
+                                        class="nav-link">
+                                        <i class="fas fa-user nav-icon"></i>
+                                        <p>My profile</p>
+                                    </a>
+                                </li>
+                            @endif
 
                             <li class="nav-item">
                                 <a href="/logout" class="nav-link">
@@ -255,6 +263,16 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script>
+        $(window).on('resize', function() {
+            if ($(window).width() < 678) {
+                $('#table').addClass('table-responsive');
+            }
+        });
+    </script>
     @yield('javascript')
 </body>
 

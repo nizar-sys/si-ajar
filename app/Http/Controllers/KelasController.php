@@ -44,16 +44,14 @@ class KelasController extends Controller
     {
         $validated = $request->validated();
         $rombel = $validated['rombel'][0] . ' ' .  $validated['rombel'][1] . ' ' . '-' . ' ' . $validated['rombel'][2];
+        
+        $cekRombel = DB::table('tb_kelas')->where('rombel', $rombel)->get();
 
-        $cekRombel = DB::table('tb_kelas')->where('rombel', $rombel)->get()->first();
-
-        $dbRombel = ($cekRombel != null) ? $dbRombel = $cekRombel->rombel : next($validated);
-
-        if ($dbRombel != null && $rombel != $dbRombel) {
+        if ($cekRombel->isEmpty()) {
             $tambahRombel = Kelas::create([
                 'rombel' => $validated['rombel'][0] . ' ' .  $validated['rombel'][1] . ' ' . '-' . ' ' . $validated['rombel'][2],
                 'wali_kelas' => $validated['wali_kelas'],
-                'ketua_kelas' => ($validated['ketua_kelas'] != null) ? $validated['ketua_kelas'] : null,
+                'ketua_kelas' => ($validated['ketua_kelas'] === null) ? null : $validated['ketua_kelas'],
             ]);
 
             if ($tambahRombel) {
