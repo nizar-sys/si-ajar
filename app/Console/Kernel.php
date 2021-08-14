@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         $now = Carbon::now();
 
         $schedule->job(new SendNotifJob)->daily()->timezone('Asia/Jakarta')->at('07:30');
-        $schedule->job(new JobUpdateStatusAjar)->everyMinute();
+        $schedule->job(new JobUpdateStatusAjar)->daily()->timezone('Asia/Jakarta')->at('07:30');
     }
 
     /**
