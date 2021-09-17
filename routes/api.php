@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/home', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'Selamat datang di Sistem Aplikasi Belajar'
+    ]);
 });
+
+Route::resource('register', RegisterController::class);
