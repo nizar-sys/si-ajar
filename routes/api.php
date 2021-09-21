@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\auth\LoginController;
 use App\Http\Controllers\api\auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,16 @@ Route::get('/home', function () {
 });
 
 Route::resource('register', RegisterController::class);
+
+Route::resource('login', LoginController::class);
+
+Route::middleware('auth:sanctum')->group(function(){
+
+    Route::get('/me', function(Request $request){
+        return response()->json([
+            'userData' => $request->user(),
+        ]);
+    });
+    
+    Route::post('/logout', [LoginController::class, 'logout']);
+});
