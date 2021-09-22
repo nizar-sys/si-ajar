@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'isGuru' => \App\Http\Middleware\IsGuru::class,
         'isActive'=> \App\Http\Middleware\IsActive::class,
         'adminGuru' => \App\Http\Middleware\AdminGuru::class,
+        'apiIsActive' => \App\Http\Middleware\api\IsActive::class,
     ];
 }

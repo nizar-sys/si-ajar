@@ -125,4 +125,26 @@ class RegisterController extends Controller
     {
         //
     }
+
+    public function verifikasi($codeVerifikasi)
+    {
+        try {
+            $user = User::where('activation_code', $codeVerifikasi)->first();
+
+            if(!$user){
+                return $this->error('Account / activation code is not found', 200, null);
+            }
+
+            $user->update([
+                'active' => '1',
+                'updated_at' => date(now()),
+            ]);
+
+            return $this->success([
+                'userData' => $user,
+            ], 'Your account has beed activated!');
+        } catch (\Throwable $th) {
+            return $this->error('Wrong activation code', 200, $th);
+        }
+    }
 }

@@ -27,13 +27,27 @@ Route::resource('register', RegisterController::class);
 
 Route::resource('login', LoginController::class);
 
-Route::middleware('auth:sanctum')->group(function(){
+// reset password
+Route::post('/reset-password', [LoginController::class, 'resetPassword']);
 
-    Route::get('/me', function(Request $request){
-        return response()->json([
-            'userData' => $request->user(),
-        ]);
+// put reset password
+Route::post('/preset-password', [LoginController::class, 'putResetPassword']);
+
+Route::middleware('auth:sanctum')->group(function () {
+
+
+    Route::middleware('apiIsActive')->group(function () {
+
+        Route::get('/me', function (Request $request) {
+            return response()->json([
+                'userData' => $request->user(),
+            ]);
+        });
     });
-    
+
+
+    // activate account
+    Route::get('/activation/{code_verification}', [RegisterController::class, 'verifikasi']);
+
     Route::post('/logout', [LoginController::class, 'logout']);
 });
