@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\auth\LoginController;
 use App\Http\Controllers\api\auth\RegisterController;
+use App\Http\Controllers\api\UsersDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,13 @@ Route::post('/preset-password', [LoginController::class, 'putResetPassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-
     Route::middleware('apiIsActive')->group(function () {
+
+        // is admin middleware
+        Route::middleware('apiIsAdmin')->group(function () {
+            // crud users
+            Route::resource('user', UsersDataController::class);
+        });
 
         Route::get('/me', function (Request $request) {
             return response()->json([

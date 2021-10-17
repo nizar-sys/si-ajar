@@ -46,6 +46,11 @@ Route::resource('data-mapel', MapelController::class);
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('admin', AdminController::class);
 
+    // crud user
+    Route::get('/data-pengguna', function(){
+        return view('admin.data-user.index');
+    });
+
     //crud guru    
     Route::get('/data-guru', [AdminController::class, 'dataGuru'])->name('data-guru');
     Route::post('/tambah-guru', [AdminController::class, 'tambahGuru'])->name('simpan-data-guru');

@@ -356,7 +356,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://si-ajar.herokuapp.com/reset-password/{{$details['token']}}" target="_blank">Reset Password</a> </td>
+                                      <td> <a href="http://127.0.0.1:8000/reset-password/{{$details['token']}}" target="_blank">Reset Password</a> </td>
                                     </tr>
                                     <tr>
                                       <td>
